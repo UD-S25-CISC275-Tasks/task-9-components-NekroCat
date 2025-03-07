@@ -2,63 +2,43 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 
 export function CycleHoliday(): React.JSX.Element {
-    let holidays = [
-        { name: "Christmas", emoji: "🎄", date: "2025-12-25" },
-        { name: "Ukraine's Independence Day", emoji: "🇺🇦", date: "2025-08-24" },
-        { name: "New Year", emoji: "🎉", date: "2025-01-01" },
-        { name: "Thanksgiving", emoji: "🦃", date: "2025-11-27" },
-        { name: "Easter", emoji: "🐰", date: "2025-04-12" }
+    let holidaysByAlphabet = [
+        "Christmas 🎄",
+        "Easter 🐣",
+        "New Year 🎉",
+        "Thanksgiving 🍁",
+        "Ukraine Independence Day 🇺🇦"
     ];
 
-    let holidaysByYear = [...holidays].sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    let holidaysByYear = [
+        "New Year 🎉",
+        "Easter 🐣",
+        "Ukraine Independence Day 🇺🇦",
+        "Thanksgiving 🍁",
+        "Christmas 🎄"
+    ];
+
+    let [currentHoliday, setCurrentHoliday] = useState<string>(
+        holidaysByAlphabet[0]
     );
 
-    let holidaysAlphabetical = [...holidays].sort((a, b) =>
-        a.name.localeCompare(b.name)
-    );
-
-    const [currentHoliday, setCurrentHoliday] = useState(holidays[2]);
-
-    let getNextHolidayAlphabetically = (current: {
-        name: string;
-        emoji: string;
-    }) => {
-        let currentIndex = holidaysAlphabetical.findIndex(
-            (holiday) => holiday.name === current.name
-        );
-        return holidaysAlphabetical[
-            (currentIndex + 1) % holidaysAlphabetical.length
-        ];
+    const advanceByAlphabet = () => {
+        const currentIndex = holidaysByAlphabet.indexOf(currentHoliday);
+        const nextIndex = (currentIndex + 1) % holidaysByAlphabet.length;
+        setCurrentHoliday(holidaysByAlphabet[nextIndex]);
     };
 
-    let getNextHolidayByYear = (current: { name: string; emoji: string }) => {
-        let currentIndex = holidaysByYear.findIndex(
-            (holiday) => holiday.name === current.name
-        );
-        return holidaysByYear[(currentIndex + 1) % holidaysByYear.length];
+    const advanceByYear = () => {
+        const currentIndex = holidaysByYear.indexOf(currentHoliday);
+        const nextIndex = (currentIndex + 1) % holidaysByYear.length;
+        setCurrentHoliday(holidaysByYear[nextIndex]);
     };
 
     return (
         <div>
-            <h2>Holiday: {currentHoliday.emoji + " " + currentHoliday.name}</h2>
-            <Button
-                onClick={() => {
-                    let nextHoliday =
-                        getNextHolidayAlphabetically(currentHoliday);
-                    setCurrentHoliday(nextHoliday);
-                }}
-            >
-                Advance by Alphabet
-            </Button>
-            <Button
-                onClick={() => {
-                    let nextHoliday = getNextHolidayByYear(currentHoliday);
-                    setCurrentHoliday(nextHoliday);
-                }}
-            >
-                Advance by Year
-            </Button>
+            <div>Holiday: {currentHoliday}</div>
+            <Button onClick={advanceByAlphabet}>Advance by Alphabet</Button>
+            <Button onClick={advanceByYear}>Advance by Year</Button>
         </div>
     );
 }
