@@ -7,7 +7,7 @@ export function CycleHoliday(): React.JSX.Element {
         "Easter 🐣",
         "New Year 🎉",
         "Thanksgiving 🍁",
-        "Ukraine Independence Day 🇺🇦"
+        "Ukraine Independence Day 🇺🇦",
     ];
 
     let holidaysByYear = [
@@ -15,11 +15,11 @@ export function CycleHoliday(): React.JSX.Element {
         "Easter 🐣",
         "Ukraine Independence Day 🇺🇦",
         "Thanksgiving 🍁",
-        "Christmas 🎄"
+        "Christmas 🎄",
     ];
 
     let [currentHoliday, setCurrentHoliday] = useState<string>(
-        holidaysByAlphabet[0]
+        holidaysByAlphabet[0],
     );
 
     const advanceByAlphabet = () => {
